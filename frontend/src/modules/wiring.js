@@ -154,6 +154,7 @@ export function installWiring(ctx) {
     });
     document.querySelectorAll(".step-pill").forEach(function (link) {
       link.addEventListener("click", function (event) {
+        if (!link.hasAttribute("href")) return;
         if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
         event.preventDefault();
         if (!confirmDiscardUnsaved()) return;

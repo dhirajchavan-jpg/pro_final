@@ -231,20 +231,28 @@ export function installNavigation(ctx) {
     for (var step = 1; step <= 8; step += 1) {
       var pillNode = byId("pill-" + step);
       var section = byId("step-" + step);
-      pillNode.hidden = step === 3 && !(complianceInfo() && complianceInfo().enabled);
+      var auditEnabled = Boolean(complianceInfo() && complianceInfo().enabled);
       var required = ctx.STEP_REQUIREMENTS[step];
       var unlocked = step === 1 || (idx >= 0 && idx >= required);
+      if (step === 3) {
+        unlocked = unlocked && auditEnabled;
+        var auditOff = ctx.state && !auditEnabled;
+        pillNode.lastElementChild.textContent = auditOff ? "Compliance (off)" : "Compliance";
+        pillNode.title = auditOff ? "Policy compliance audit is off for this tender" :
+          unlocked ? "Review tender compliance" : "Available after tender analysis when the policy audit is enabled";
+      }
       if (step === 6 && manualReviewOnly()) unlocked = ctx.state.vendors.some(bidderIntakeComplete);
       if (step === 6 && ctx.state && ctx.state.vendors.some(bidderDocumentsPrepared)) unlocked = true;
       if (step === 7 && anyEvaluationStarted) unlocked = true;
       if (step === 8 && anyEvaluationComplete) unlocked = true;
       var done = step === 1 ? idx >= 1 : idx > required;
       if (step === 2) done = idx >= ctx.STAGES.indexOf("contract_drafted");
-      if (step === 3) done = complianceDone();
+      if (step === 3) done = auditEnabled && complianceDone();
       if (step === 4) done = idx >= ctx.STAGES.indexOf("contract_frozen");
       pillNode.className = "step-pill" + (done ? " done" : unlocked ? " available" : "") +
         (ctx.PAGE_NAMES[step - 1] === ctx.activePage ? " current" : "");
       pillNode.href = unlocked ? pageUrl(ctx.PAGE_NAMES[step - 1]) : pageUrl(recommendedPage());
+      if (step === 3 && !unlocked) pillNode.removeAttribute("href");
       pillNode.setAttribute("aria-disabled", unlocked ? "false" : "true");
       if (ctx.PAGE_NAMES[step - 1] === ctx.activePage) pillNode.setAttribute("aria-current", "step");
       else pillNode.removeAttribute("aria-current");
