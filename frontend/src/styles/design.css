@@ -1,0 +1,88 @@
+@tailwind utilities;
+
+:root {
+  --bg: #f2f5f6; --panel: #fff; --panel-2: #edf5f4; --line: #cfdadf;
+  --brand: #075d5a; --brand-hover: #034b49; --brand-muted: #375e68; --brand-soft: #e8f4f1; --brand-accent: #149184;
+  --text: #162e38; --muted: #526771; --cyan: #075d5a;
+  --shadow: 0 2px 4px rgb(22 46 56 / .04), 0 12px 28px -18px rgb(22 46 56 / .2);
+}
+body { margin: 0; background: var(--bg); color: var(--text); font-family: "Segoe UI Variable", "Segoe UI", sans-serif; }
+#root { min-height: 100vh; }
+#root :focus-visible { outline: 3px solid #198c94; outline-offset: 3px; }
+#root [hidden] { display: none !important; }
+#root input:not([type=checkbox]):not([type=radio]), #root textarea, #root select {
+  @apply rounded-lg; border-color: #bbcbd0;
+}
+#root input:focus, #root textarea:focus, #root select:focus { border-color: var(--brand); }
+#root .global-header, #root .topbar { background: #122e39; border-bottom: 3px solid #32ab9a; }
+.global-header .global-brand strong, .global-header .reviewer-identity strong,
+.topbar .brand strong, .topbar nav a, .topbar .quiet { color: #fff; }
+.global-header .product-mark, .topbar .mark { background-color: #86e0ce; }
+.global-header .reviewer-identity small, .global-header .system-status, .topbar .brand small { color: #c2d8de; }
+.global-header .reviewer-avatar { color: #a9ebdb; background: #21444d; border-color: #41636a; }
+.topbar nav a:hover, .topbar .quiet:hover { color: #0e4c4a; background: #e5f5f1; }
+.topbar .quiet { background: transparent; border-color: #658089; }
+.account-shell.auth-mode .account-intro {
+  isolation: isolate; position: relative; overflow: hidden;
+  background: linear-gradient(145deg,#102f3b 15%,#10444a 72%,#13675f);
+}
+.account-shell.auth-mode .account-intro::after {
+  content: ""; position: absolute; z-index: -1; inset: 54% -10% -30% 10%;
+  border-radius: 100% 0 0; opacity: .35;
+  background: repeating-radial-gradient(ellipse at 100% 100%,transparent 0 24px,#67c4b9 25px 26px,transparent 27px 46px);
+}
+.account-shell.auth-mode .account-brand .product-mark { background-color: #94decf; }
+.account-shell.auth-mode .account-copy h1 { font-size: clamp(32px,4.4vw,64px); letter-spacing: -.045em; text-wrap: balance; }
+.account-shell.auth-mode .auth-card, .dashboard-card, .panel, .portfolio-stat, .metrics > * {
+  border-radius: 14px; border-color: var(--line); box-shadow: var(--shadow);
+}
+#root .dashboard-head, #root .tender-create-heading, #root .panel-head { border-color: var(--line); }
+#root .tender-create-heading h2, #root .dashboard-head h2, #root .page-head h1 {
+  color: #163641; letter-spacing: -.035em; font-size: clamp(24px,2.5vw,36px); line-height: 1.16;
+}
+#root .tender-create-card { @apply rounded-xl; border: 1px solid var(--line); background: #fff; }
+#root .tender-upload-zone { background-color: #edf7f5; border-color: #66a79f; border-radius: 12px; }
+#root .tender-upload-zone:focus-within, #root .tender-upload-zone:hover { border-color: #08655c; background-color: #e1f2ed; }
+#root .analysis-schema, #root .setup-summary, #root .profile-settings { background-color: #f4f8f8; border-color: var(--line); }
+#root .step-num, #root .eyebrow { color: #376775; }
+#root .account-shell.auth-mode .eyebrow { color: #a6d6d3; }
+#root .step-pill.current, #root .step-pill.done.current { background: #dff3ed; color: #074f48; }
+#root th { color: #37505b; background-color: #edf3f4; }
+#root .ledger-evidence summary, #root .evidence-group summary { color: #095d58; cursor: pointer; }
+#root blockquote { border-left: 3px solid #53a89a; background: #eff7f5; color: #253f46; }
+#root .ledger-workspace-row > td { background: #edf5f4; }
+#root .checklist-detail-pane, #root .result-detail-pane { overscroll-behavior: contain; }
+@media (min-width: 1200px) {
+  #root:has(#workflow-header:not([hidden])) { --rail: 178px; }
+  #workflow-header:not([hidden]) .stepper {
+    position: fixed; top: 63px; bottom: 0; left: 0; width: var(--rail); margin: 0;
+    display: flex; flex-direction: column; align-items: stretch; justify-content: start;
+    overflow-y: auto; gap: 6px; padding: 24px 12px; border-right: 1px solid var(--line); background: #fafdfe;
+  }
+  #workflow-header .step-pill { min-height: 42px; padding: 9px 12px; border: 0; border-radius: 8px; font-size: 13px; }
+  #workflow-header .step-pill.current::after { inset: 9px auto 9px 0; width: 3px; height: auto; border-radius: 5px; }
+  #workflow-header .tender-context-bar { margin-left: var(--rail); }
+  #workflow-header > .message:not(:empty), #root:has(#workflow-header:not([hidden])) #workflow-main {
+    width: calc(100% - var(--rail) - 48px); max-width: none; margin-left: calc(var(--rail) + 24px); margin-right: 24px;
+  }
+  #root:has(#workflow-header:not([hidden])) .app-footer { margin-left: var(--rail); }
+}
+@media(max-width: 720px) {
+  #root .global-header-inner, #root .topbar { gap: 10px; }
+  #root .topbar { flex-wrap: wrap; padding: 12px 16px; }
+  #root .stepper { scroll-snap-type: x proximity; }
+  #root .step-pill { scroll-snap-align: center; }
+  #root .panel, #root .auth-card { border-radius: 10px; }
+  #root .tender-create-heading h2 { font-size: 25px; }
+}
+
+
+/* Let a short dashboard fill the viewport above its footer. */
+#root:has(> .account-shell.dashboard-mode:not([hidden])) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+#root > .account-shell.dashboard-mode:not([hidden]) {
+  flex: 1 0 auto;
+}

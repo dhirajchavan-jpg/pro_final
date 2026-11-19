@@ -1,0 +1,42 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.env
+.secrets
+
+# Runtime and local databases
+runtime/
+postgresql/
+libreoffice/
+installers/
+Test Files/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# JavaScript
+node_modules/
+frontend/dist/
+npm-debug.log*
+
+# Release-only artifacts
+backend/python-*-amd64.exe
+backend/PACKAGE_MANIFEST.sha256
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
